@@ -1,0 +1,110 @@
+# Build directories
+/build/
+/build-clang/
+/out/
+/bin/
+/lib/
+/Debug/
+/Release/
+/x64/
+/x86/
+/Win32/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+.cmake/
+
+# Platform-specific
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.vcxproj.filters
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# C++ specific files
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+raymarch
+
+# C++ module files
+*.gcm
+*.pcm
+*.ifc
+*.gcov
+gcm.cache/
+
+# SFML related
+*.frag.cache
+
+# Temporary files
+*.swp
+*~
+*.bak
+*.tmp
+
+# OS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Log files
+*.log
+*.tlog
+
+# Crash dumps
+*.dmp
+*.crash
+EOF < /dev/null

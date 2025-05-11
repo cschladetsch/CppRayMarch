@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(./build-clang.sh:*)",
+      "Bash(ls:*)",
+      "Bash(./b)",
+      "Bash(./r)",
+      "Bash(./build.sh:*)",
+      "Bash(./build-clang/raymarch)"
+    ],
+    "deny": []
+  }
+}
