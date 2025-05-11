@@ -108,3 +108,4 @@ $RECYCLE.BIN/
 *.dmp
 *.crash
 EOF < /dev/null
+**/.claude/settings.local.json

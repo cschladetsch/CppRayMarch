@@ -99,8 +99,13 @@ This project leverages modern C++ features including:
 - `src/` - Source code files
   - `main.cpp` - Application entry point
   - `modules/` - C++ module implementations
-- `include/` - Header files
-- `build-clang.sh` - Build script for Clang
+    - `camera.cpp` - Camera module implementation (with rm namespace)
+    - `common.cpp` - Common utilities and data structures
+    - `renderer.cpp` - Rendering pipeline implementation
+    - `scene.cpp` - Scene graph and SDF implementations
+    - Note: The `.cppm` files are reference files, not used in the build
+- `include/` - Header files (traditional includes for non-modular code)
+- `build-clang.sh` - Build script for Clang (recommended)
 - `build-gcc.sh` - Build script for GCC
 
 ## License

@@ -8,7 +8,9 @@
       "Bash(./b)",
       "Bash(./r)",
       "Bash(./build.sh:*)",
-      "Bash(./build-clang/raymarch)"
+      "Bash(./build-clang/raymarch)",
+      "Bash(diff:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
