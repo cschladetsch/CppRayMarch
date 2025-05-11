@@ -4,6 +4,10 @@ A modern C++23 implementation of a ray marching renderer using Signed Distance F
 
 \![Ray Marching Render](https://github.com/username/CppRayMarch/raw/main/screenshots/render.png)
 
+## Demo
+
+![Demo](resources/Demo.jpg)
+
 ## Features
 
 - Fast ray marching using signed distance functions (SDFs)
