@@ -15,7 +15,9 @@ import common;
 import scene;
 import camera;
 
-export class Renderer {
+export namespace rm {
+
+class Renderer {
 public:
     Renderer(int width, int height) : width(width), height(height) {
         image.create(width, height);
@@ -133,3 +135,5 @@ private:
     int maxBounces = 4;
     int samplesPerPixel = 1;
 };
+
+} // namespace rm

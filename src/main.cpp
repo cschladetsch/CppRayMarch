@@ -98,6 +98,7 @@ int main() {
     rm::Renderer renderer(width, height);
     renderer.setExposure(1.8f); // Increased exposure to balance the darker scene
     renderer.setSamplesPerPixel(1);  // Low for interactive performance
+    renderer.setMaxBounces(2);  // Reduce bounces for better performance
 
     // Set darker sky and ground colors
     renderer.setSkyColors(
@@ -153,11 +154,14 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
             else if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Escape)
+                if (event.key.code == sf::Keyboard::Escape) {
+                    std::cout << "ESC pressed, closing window\n";
                     window.close();
+                }
                 else if (event.key.code == sf::Keyboard::Space) {
                     autoCamera = !autoCamera;
                     needsRender = true;
+                    std::cout << "Toggled auto camera: " << (autoCamera ? "ON" : "OFF") << "\n";
                 }
                 else if (event.key.code == sf::Keyboard::R) {
                     int samples = std::min(renderer.getSamplesPerPixel() * 2, 16);
@@ -184,18 +188,31 @@ int main() {
         if (autoCamera) {
             // Automatic camera movement in a more interesting pattern
             time += 0.01f;
+            
+            // Print debug info every second (approximately)
+            if (std::fmod(time, 1.0f) < 0.01f) {
+                std::cout << "Auto camera moving: time = " << time << "\n";
+            }
 
             float radius = 15.0f; // Wider orbit
             float camX = radius * std::sin(time * 0.2f);
             float camZ = radius * std::cos(time * 0.2f);
             float camY = 3.5f + std::sin(time * 0.3f) * 2.0f; // More dramatic height changes
 
-            cameraPos = rm::Vec3(camX, camY, camZ);
+            rm::Vec3 newCameraPos = rm::Vec3(camX, camY, camZ);
 
             // Look at a point that moves slightly
             float targetX = std::sin(time * 0.15f) * 3.0f;
             float targetZ = std::cos(time * 0.15f) * 3.0f;
-            cameraTarget = rm::Vec3(targetX, 0.5f + std::sin(time * 0.4f) * 0.5f, targetZ);
+            rm::Vec3 newCameraTarget = rm::Vec3(targetX, 0.5f + std::sin(time * 0.4f) * 0.5f, targetZ);
+            
+            // Only re-render if the camera has moved sufficiently
+            if ((newCameraPos - cameraPos).length() > 0.01f || 
+                (newCameraTarget - cameraTarget).length() > 0.01f) {
+                cameraPos = newCameraPos;
+                cameraTarget = newCameraTarget;
+                needsRender = true;
+            }
         }
         else {
             // Manual camera controls
