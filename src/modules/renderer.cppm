@@ -27,10 +27,19 @@ public:
         const int numThreads = std::thread::hardware_concurrency();
         std::vector<std::thread> threads;
         std::atomic<int> nextRow(0);
-        std::mutex imageMutex;
+        
+        // Store thread-local pixel data
+        std::vector<std::vector<sf::Color>> threadPixels(numThreads);
+        std::vector<std::vector<int>> threadRows(numThreads);
+        std::vector<std::vector<int>> threadCols(numThreads);
         
         for (int t = 0; t < numThreads; ++t) {
-            threads.emplace_back([&]() {
+            // Pre-allocate memory for thread-local buffers
+            threadPixels[t].reserve(width * height / numThreads);
+            threadRows[t].reserve(width * height / numThreads);
+            threadCols[t].reserve(width * height / numThreads);
+            
+            threads.emplace_back([&, t]() {
                 int row;
                 while ((row = nextRow.fetch_add(1)) < height) {
                     for (int x = 0; x < width; ++x) {
@@ -48,9 +57,10 @@ public:
                         // Average samples
                         pixelColor = pixelColor / float(samplesPerPixel);
                         
-                        // Lock when writing to image
-                        std::lock_guard<std::mutex> lock(imageMutex);
-                        image.setPixel(x, row, toColor(pixelColor, exposure));
+                        // Store pixel data in thread-local buffer
+                        threadPixels[t].push_back(toColor(pixelColor, exposure));
+                        threadRows[t].push_back(row);
+                        threadCols[t].push_back(x);
                     }
                 }
             });
@@ -58,6 +68,13 @@ public:
         
         for (auto& thread : threads) {
             thread.join();
+        }
+        
+        // Combine all thread-local buffers into the final image
+        for (int t = 0; t < numThreads; ++t) {
+            for (size_t i = 0; i < threadPixels[t].size(); ++i) {
+                image.setPixel(threadCols[t][i], threadRows[t][i], threadPixels[t][i]);
+            }
         }
         
         textureNeedsUpdate = true;

@@ -10,7 +10,9 @@
       "Bash(./build.sh:*)",
       "Bash(./build-clang/raymarch)",
       "Bash(diff:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(cmake:*)",
+      "Bash(ninja)"
     ],
     "deny": []
   }
